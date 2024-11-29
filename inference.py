@@ -1,3 +1,7 @@
+import os
+
+os.environ["HF_TOKEN"] = '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'
+
 from PIL import Image
 import torch
 import fire
@@ -13,7 +17,7 @@ def move_inputs_to_device(model_inputs: dict, device: str):
 
 
 def get_model_inputs(
-    processor: PaliGemmaProcessor, prompt: str, image_file_path: str, device: str
+        processor: PaliGemmaProcessor, prompt: str, image_file_path: str, device: str
 ):
     image = Image.open(image_file_path)
     images = [image]
@@ -24,15 +28,15 @@ def get_model_inputs(
 
 
 def test_inference(
-    model: PaliGemmaForConditionalGeneration,
-    processor: PaliGemmaProcessor,
-    device: str,
-    prompt: str,
-    image_file_path: str,
-    max_tokens_to_generate: int,
-    temperature: float,
-    top_p: float,
-    do_sample: bool,
+        model: PaliGemmaForConditionalGeneration,
+        processor: PaliGemmaProcessor,
+        device: str,
+        prompt: str,
+        image_file_path: str,
+        max_tokens_to_generate: int,
+        temperature: float,
+        top_p: float,
+        do_sample: bool,
 ):
     model_inputs = get_model_inputs(processor, prompt, image_file_path, device)
     input_ids = model_inputs["input_ids"]
@@ -102,14 +106,14 @@ def _sample_top_p(probs: torch.Tensor, p: float):
 
 
 def main(
-    model_path: str = None,
-    prompt: str = None,
-    image_file_path: str = None,
-    max_tokens_to_generate: int = 100,
-    temperature: float = 0.8,
-    top_p: float = 0.9,
-    do_sample: bool = False,
-    only_cpu: bool = False,
+        model_path: str = None,
+        prompt: str = None,
+        image_file_path: str = None,
+        max_tokens_to_generate: int = 100,
+        temperature: float = 0.8,
+        top_p: float = 0.9,
+        do_sample: bool = False,
+        only_cpu: bool = False,
 ):
     device = "cpu"
 
@@ -145,4 +149,18 @@ def main(
 
 
 if __name__ == "__main__":
-    fire.Fire(main)
+    # from huggingface_hub import snapshot_download
+    # local_dir = "root/huggingface_projects"
+    # snapshot_download(repo_id='google/paligemma-3b-pt-224', local_dir=local_dir, repo_type="model")
+
+
+    main(
+        model_path="root/huggingface_projects",
+        prompt="what is the name of the building? ",
+        image_file_path="zhonglou3.jpg",
+        max_tokens_to_generate=100,
+        temperature=0.8,
+        top_p=0.9,
+        do_sample=False,
+        only_cpu=False
+    )

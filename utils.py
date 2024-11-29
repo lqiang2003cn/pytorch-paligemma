@@ -22,6 +22,7 @@ def load_hf_model(model_path: str, device: str) -> Tuple[PaliGemmaForConditional
                 tensors[key] = f.get_tensor(key)
 
     # Load the model's config
+
     with open(os.path.join(model_path, "config.json"), "r") as f:
         model_config_file = json.load(f)
         config = PaliGemmaConfig(**model_config_file)

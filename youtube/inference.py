@@ -157,7 +157,7 @@ if __name__ == "__main__":
     main(
         model_path="root/huggingface_projects",
         prompt="what is the name of the building? ",
-        image_file_path="zhonglou3.jpg",
+        image_file_path="../zhonglou3.jpg",
         max_tokens_to_generate=100,
         temperature=0.8,
         top_p=0.9,
